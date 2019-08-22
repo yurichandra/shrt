@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/yurichandra/shrt/model"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" //Postgres dialect.
 )
@@ -36,4 +38,11 @@ func Get() *gorm.DB {
 	}
 
 	return db
+}
+
+// Migrate doing migration to database.
+func Migrate() {
+	Get().AutoMigrate(
+		&model.URL{},
+	)
 }
