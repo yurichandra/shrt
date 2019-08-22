@@ -46,3 +46,17 @@ func Migrate() {
 		&model.URL{},
 	)
 }
+
+// Drop doing drop table on database.
+func Drop() {
+	Get().DropTableIfExists(
+		&model.URL{},
+	)
+}
+
+// Reset doing drop and migrate database
+// like restart from the beginning.
+func Reset() {
+	Drop()
+	Migrate()
+}
