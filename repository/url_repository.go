@@ -21,7 +21,7 @@ func (r *URLRepository) Get() []model.URL {
 // Find return single url.
 func (r *URLRepository) Find(id uint) model.URL {
 	url := model.URL{}
-	r.db.First(&url)
+	r.db.First(&url, id)
 
 	return url
 }
