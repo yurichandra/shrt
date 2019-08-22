@@ -1,2 +1,2 @@
 # shrt
-Url shortener service written in GO.
+URL shortener service. To make it short, I called shrt (shirt).
