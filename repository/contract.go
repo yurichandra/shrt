@@ -1,0 +1,15 @@
+package repository
+
+import (
+	"github.com/yurichandra/shrt/model"
+)
+
+// URLRepositoryContract represent contract
+// of URLRepository.
+type URLRepositoryContract interface {
+	Get() []model.URL
+	Find(id uint) model.URL
+	Create(data *model.URL) error
+	Update(data *model.URL) error
+	Delete(id uint) error
+}
