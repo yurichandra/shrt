@@ -66,6 +66,51 @@ func TestCreate(t *testing.T) {
 
 	expected := testURLRepo.Create(mockedURL)
 	if expected != nil {
-		t.Errorf("Something happened during calling Create() method")
+		t.Errorf("Error happened during calling Create() method")
+	}
+}
+
+func TestUpdate(t *testing.T) {
+	db.Reset()
+
+	mockedURL := &model.URL{
+		OriginalURL: _testFaker.Lorem().Word(),
+		ShortURL:    _testFaker.Lorem().Word(),
+	}
+
+	testURLRepo := &URLRepository{
+		db: _testDB,
+	}
+
+	testURLRepo.Create(mockedURL)
+
+	updatedMockURL := &model.URL{
+		OriginalURL: _testFaker.Lorem().Word(),
+		ShortURL:    _testFaker.Lorem().Word(),
+	}
+
+	expected := testURLRepo.Update(updatedMockURL)
+	if expected != nil {
+		t.Errorf("Error happened during calling Update() method")
+	}
+}
+
+func TestDelete(t *testing.T) {
+	db.Reset()
+
+	mockedURL := &model.URL{
+		OriginalURL: _testFaker.Lorem().Word(),
+		ShortURL:    _testFaker.Lorem().Word(),
+	}
+
+	testURLRepo := &URLRepository{
+		db: _testDB,
+	}
+
+	testURLRepo.Create(mockedURL)
+
+	expected := testURLRepo.Delete(mockedURL.ID)
+	if expected != nil {
+		t.Errorf("Error happened during calling Delete() method")
 	}
 }
