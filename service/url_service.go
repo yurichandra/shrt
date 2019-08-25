@@ -1,7 +1,7 @@
 package service
 
 import (
-	"crypto/md5"
+	"crypto/sha1"
 	"encoding/hex"
 	"encoding/json"
 
@@ -38,11 +38,7 @@ func (srv *URLService) Find(id uint) model.URL {
 func (srv *URLService) Create(originalURL string) (model.URL, error) {
 	proceededURL := srv.processURL(originalURL)
 	found, err := srv.cache.HGet(keyCache, proceededURL)
-	if err != nil {
-		return model.URL{}, err
-	}
-
-	if found != "" {
+	if len(found) > 0 {
 		var urlFound model.URL
 		json.Unmarshal([]byte(found), &urlFound)
 
@@ -71,8 +67,8 @@ func (srv *URLService) Create(originalURL string) (model.URL, error) {
 
 // ProcessURL will process given URL from params and return it as hash.
 func (srv *URLService) processURL(s string) string {
-	hash := md5.New()
-	hash.Sum([]byte(s))
+	hash := sha1.New()
+	hash.Write([]byte(s))
 
 	hashURL := hex.EncodeToString(hash.Sum(nil))
 

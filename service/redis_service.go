@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/go-redis/redis"
 )
 
@@ -13,7 +15,7 @@ type RedisService struct {
 func (r *RedisService) HGet(hash string, field string) (string, error) {
 	value, err := r.client.HGet(hash, field).Result()
 	if err != nil {
-		return "", err
+		return "", errors.New("Hash or field not exist")
 	}
 
 	return value, nil
@@ -23,7 +25,7 @@ func (r *RedisService) HGet(hash string, field string) (string, error) {
 func (r *RedisService) HSet(hash string, field string, value string) error {
 	err := r.client.HSet(hash, field, value).Err()
 	if err != nil {
-		return err
+		return errors.New("HSet was failed")
 	}
 
 	return nil
