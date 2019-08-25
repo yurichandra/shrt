@@ -16,8 +16,8 @@ const (
 
 // URLService represent service layer of URL model.
 type URLService struct {
-	repo  *repository.URLRepository
-	cache *RedisService
+	repo  repository.URLRepositoryContract
+	cache RedisServiceContract
 }
 
 // Get return all urls available.
@@ -35,7 +35,7 @@ func (srv *URLService) Find(id uint) model.URL {
 }
 
 // Create will store original url into cache or database and return it.
-func (srv *URLService) Create(originalURL string) (interface{}, error) {
+func (srv *URLService) Create(originalURL string) (model.URL, error) {
 	proceededURL := srv.processURL(originalURL)
 	found, err := srv.cache.HGet(keyCache, proceededURL)
 	if err != nil {
@@ -43,18 +43,18 @@ func (srv *URLService) Create(originalURL string) (interface{}, error) {
 	}
 
 	if found != "" {
-		var urlFound map[string]interface{}
+		var urlFound model.URL
 		json.Unmarshal([]byte(found), &urlFound)
 
 		return urlFound, nil
 	}
 
-	url := &model.URL{
+	url := model.URL{
 		OriginalURL: originalURL,
 		ShortURL:    proceededURL,
 	}
 
-	err = srv.repo.Create(url)
+	err = srv.repo.Create(&url)
 	if err != nil {
 		return model.URL{}, err
 	}

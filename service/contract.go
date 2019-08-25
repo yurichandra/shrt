@@ -7,8 +7,8 @@ import (
 // RedisServiceContract represent contract of
 // redis service.
 type RedisServiceContract interface {
-	HSet(hash string, field string, value string) error
 	HGet(hash string, field string) (string, error)
+	HSet(hash string, field string, value string) error
 }
 
 // URLServiceContract represent contract of
@@ -16,5 +16,5 @@ type RedisServiceContract interface {
 type URLServiceContract interface {
 	Get() []model.URL
 	Find(id uint) model.URL
-	Create(originalURL string) (interface{}, error)
+	Create(originalURL string) (model.URL, error)
 }
