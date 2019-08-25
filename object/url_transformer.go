@@ -1,6 +1,9 @@
 package object
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/go-chi/render"
 	"github.com/yurichandra/shrt/model"
 )
@@ -8,9 +11,8 @@ import (
 // CreateURLResponse creating object response for url model.
 func CreateURLResponse(url model.URL) render.Renderer {
 	return &URLResponse{
-		ID:          url.ID,
 		OriginalURL: url.OriginalURL,
-		ShortURL:    url.ShortURL,
+		ShortURL:    fmt.Sprintf("%s/%s", os.Getenv("BASE_URL"), url.ShortURL),
 	}
 }
 

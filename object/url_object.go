@@ -12,7 +12,6 @@ type URLRequest struct {
 
 // URLResponse represent object response of URL model.
 type URLResponse struct {
-	ID          uint   `json:"id"`
 	OriginalURL string `json:"original_url"`
 	ShortURL    string `json:"short_url"`
 }
