@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  shrt:
+    image: yurichandra/shrt
+    container_name: shrt
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    networks:
+      - arsenal
+
+networks:
+  arsenal:
+    external: true
