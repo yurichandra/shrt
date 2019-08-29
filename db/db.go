@@ -44,6 +44,7 @@ func Get() *gorm.DB {
 func Migrate() {
 	Get().AutoMigrate(
 		&model.URL{},
+		&model.User{},
 	)
 }
 
@@ -51,6 +52,7 @@ func Migrate() {
 func Drop() {
 	Get().DropTableIfExists(
 		&model.URL{},
+		&model.User{},
 	)
 }
 
