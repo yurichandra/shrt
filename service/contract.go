@@ -19,3 +19,10 @@ type URLServiceContract interface {
 	Find(id uint) model.URL
 	Create(originalURL string) (model.URL, error)
 }
+
+// AuthServiceContract represent contract of
+// AuthService.
+type AuthServiceContract interface {
+	Authenticate(email string, password string) (model.URL, error)
+	Authorize(email string, password string) (model.URL, error)
+}
