@@ -21,6 +21,8 @@ func main() {
 		break
 	case "migrate":
 		runMigration()
+	case "seed":
+		seedKeys()
 	default:
 		fmt.Println("Invalid command")
 	}

@@ -1,9 +1,18 @@
 package service
 
 import (
-	"errors"
+	"crypto/rand"
+	"encoding/base64"
 
 	"github.com/go-redis/redis"
+)
+
+const (
+	activeKey = "active_key"
+	usedKey   = "used_key"
+	mappedKey = "mapped_key"
+	keyLength = 4
+	keyTotal  = 200
 )
 
 // RedisService represent service layer of Redis.
@@ -11,21 +20,28 @@ type RedisService struct {
 	client *redis.Client
 }
 
-// HGet fetch data in Redis cluster based on hash and field.
-func (r *RedisService) HGet(hash string, field string) (string, error) {
-	value, err := r.client.HGet(hash, field).Result()
-	if err != nil {
-		return "", errors.New("Hash or field not exist")
+// Init initialize random string in active_key redis.
+func (service *RedisService) Init() error {
+	var temp []string             // Temporary variable to store all encoded string
+	keys := make(map[string]bool) // Variable to store is item of array exist or not.
+
+	for i := 0; i < keyTotal; i++ {
+		rb := make([]byte, 3)
+		_, err := rand.Read(rb)
+
+		if err != nil {
+			return err
+		}
+
+		key := base64.RawURLEncoding.EncodeToString(rb)
+		temp = append(temp, key)
 	}
 
-	return value, nil
-}
-
-// HSet save field data in redis cluster based on hash and field
-func (r *RedisService) HSet(hash string, field string, value string) error {
-	err := r.client.HSet(hash, field, value).Err()
-	if err != nil {
-		return errors.New("HSet was failed")
+	for _, item := range temp {
+		if _, value := keys[item]; !value {
+			keys[item] = true
+			service.client.RPush(activeKey, item)
+		}
 	}
 
 	return nil

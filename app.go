@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"github.com/yurichandra/shrt/db"
-	"github.com/yurichandra/shrt/handler"
+	"github.com/yurichandra/shrt/service"
 )
 
 func initRoutes() chi.Router {
@@ -26,8 +26,6 @@ func initRoutes() chi.Router {
 		res, _ := json.Marshal(payload)
 		w.Write(res)
 	})
-
-	routes.Mount("/urls", handler.NewURLHandler(urlService).GetRoutes())
 
 	return routes
 }
@@ -47,4 +45,11 @@ func runMigration() {
 	fmt.Println("Running migration")
 	db.Migrate()
 	fmt.Println("Migration completed!")
+}
+
+func seedKeys() {
+	fmt.Println("Seeding keys...")
+	redisService := service.InitRedisService(redisClient)
+	redisService.Init()
+	fmt.Println("Seeding completed...")
 }

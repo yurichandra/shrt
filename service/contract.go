@@ -7,8 +7,10 @@ import (
 // RedisServiceContract represent contract of
 // redis service.
 type RedisServiceContract interface {
-	HGet(hash string, field string) (string, error)
-	HSet(hash string, field string, value string) error
+	Init() error
+	Map()
+	Generate()
+	Push()
 }
 
 // URLServiceContract represent contract of
