@@ -50,7 +50,7 @@ func (auth *AuthService) Authorize(email string, password string) (model.User, e
 
 	err = auth.repo.Create(&user)
 	if err != nil {
-		return model.User{}, err
+		return model.User{}, errors.New("Email already taken")
 	}
 
 	return user, nil

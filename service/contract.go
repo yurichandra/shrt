@@ -12,9 +12,9 @@ type RedisServiceContract interface {
 	Map(key string, url *model.URL) error
 }
 
-// URLServiceContract represent contract of
-// URL service.
-type URLServiceContract interface {
+// ShortenerServiceContract represent contract of
+// Shorten service.
+type ShortenerServiceContract interface {
 	Get() []model.URL
 	Find(id uint) model.URL
 	Create(originalURL string) (model.URL, error)

@@ -10,10 +10,10 @@ import (
 )
 
 var (
-	urlService   *service.URLService
-	redisService *service.RedisService
-	authService  *service.AuthService
-	redisClient  *redis.Client
+	shortenerService *service.ShortenerService
+	redisService     *service.RedisService
+	authService      *service.AuthService
+	redisClient      *redis.Client
 
 	userRepo repository.UserRepositoryContract
 )

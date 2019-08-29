@@ -2,9 +2,9 @@ package handler
 
 import "github.com/yurichandra/shrt/service"
 
-// NewURLHandler return new handler of URL.
-func NewURLHandler(srv service.URLServiceContract) *URLHandler {
-	return &URLHandler{
+// NewShortenerHandler return new handler of shortener.
+func NewShortenerHandler(srv service.ShortenerServiceContract) *ShortenerHandler {
+	return &ShortenerHandler{
 		url: srv,
 	}
 }

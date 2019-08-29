@@ -11,13 +11,13 @@ import (
 	"github.com/yurichandra/shrt/service"
 )
 
-// URLHandler represent handler of URL.
-type URLHandler struct {
-	url service.URLServiceContract
+// ShortenerHandler represent handler of shortener.
+type ShortenerHandler struct {
+	url service.ShortenerServiceContract
 }
 
 // GetRoutes return all routes of URL.
-func (h *URLHandler) GetRoutes() chi.Router {
+func (h *ShortenerHandler) GetRoutes() chi.Router {
 	router := chi.NewRouter()
 
 	router.Get("/", h.Get)
@@ -28,7 +28,7 @@ func (h *URLHandler) GetRoutes() chi.Router {
 }
 
 // Get return all available urls.
-func (h *URLHandler) Get(w http.ResponseWriter, r *http.Request) {
+func (h *ShortenerHandler) Get(w http.ResponseWriter, r *http.Request) {
 	urls := h.url.Get()
 
 	urlListResponse := object.CreateURLListResponse(urls)
@@ -41,7 +41,7 @@ func (h *URLHandler) Get(w http.ResponseWriter, r *http.Request) {
 }
 
 // Find return single url.
-func (h *URLHandler) Find(w http.ResponseWriter, r *http.Request) {
+func (h *ShortenerHandler) Find(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
 	url := h.url.Find(uint(id))
 	if url.ID == 0 {
@@ -61,7 +61,7 @@ func (h *URLHandler) Find(w http.ResponseWriter, r *http.Request) {
 }
 
 // Store saves and return new or existing URL.
-func (h *URLHandler) Store(w http.ResponseWriter, r *http.Request) {
+func (h *ShortenerHandler) Store(w http.ResponseWriter, r *http.Request) {
 	request := object.URLRequest{}
 	if err := render.Bind(r, &request); err != nil {
 		render.Render(w, r, sendUnprocessableEntityResponse(err.Error()))

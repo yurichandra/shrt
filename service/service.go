@@ -12,9 +12,9 @@ func InitRedisService(client *redis.Client) *RedisService {
 	}
 }
 
-// InitURLService initialize url service.
-func InitURLService(repo repository.URLRepositoryContract, redis RedisServiceContract) *URLService {
-	return &URLService{
+// InitShortenerService initialize url service.
+func InitShortenerService(repo repository.URLRepositoryContract, redis RedisServiceContract) *ShortenerService {
+	return &ShortenerService{
 		repo:  repo,
 		cache: redis,
 	}
