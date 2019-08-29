@@ -8,9 +8,8 @@ import (
 // redis service.
 type RedisServiceContract interface {
 	Init() error
-	Map()
-	Generate()
-	Push()
+	Generate() (string, error)
+	Map(key string, url *model.URL) error
 }
 
 // URLServiceContract represent contract of

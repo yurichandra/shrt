@@ -3,8 +3,10 @@ package service
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 
 	"github.com/go-redis/redis"
+	"github.com/yurichandra/shrt/model"
 )
 
 const (
@@ -42,6 +44,29 @@ func (service *RedisService) Init() error {
 			keys[item] = true
 			service.client.RPush(activeKey, item)
 		}
+	}
+
+	return nil
+}
+
+// Generate will return string available on active_keys redis.
+func (service *RedisService) Generate() (string, error) {
+	key, err := service.client.LPop(activeKey).Result()
+	if err != nil {
+		return "", err
+	}
+
+	service.client.RPush(usedKey, key)
+
+	return key, nil
+}
+
+// Map will mapping keys to newly created URL.
+func (service *RedisService) Map(key string, url *model.URL) error {
+	urlCasted, err := json.Marshal(url)
+	err = service.client.HSet(mappedKey, key, string(urlCasted)).Err()
+	if err != nil {
+		return err
 	}
 
 	return nil
