@@ -10,14 +10,14 @@ type RedisServiceContract interface {
 	Init() error
 	Generate() (string, error)
 	Map(key string, url *model.URL) error
+	Find(key string) (string, error)
 }
 
 // ShortenerServiceContract represent contract of
 // Shorten service.
 type ShortenerServiceContract interface {
-	Get() []model.URL
-	Find(id uint) model.URL
-	Create(originalURL string) (model.URL, error)
+	Find(shortURL string) (model.URL, error)
+	Shorten(data map[string]string, auth bool) (model.URL, error)
 }
 
 // AuthServiceContract represent contract of

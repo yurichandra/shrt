@@ -29,6 +29,7 @@ func initRoutes() chi.Router {
 	})
 
 	routes.Mount("/auth", handler.NewAuthHandler(authService).GetRoutes())
+	routes.Mount("/shorten", handler.NewShortenerHandler(shortenerService).GetRoutes())
 
 	return routes
 }

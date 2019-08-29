@@ -71,3 +71,13 @@ func (service *RedisService) Map(key string, url *model.URL) error {
 
 	return nil
 }
+
+// Find a key in redis.
+func (service *RedisService) Find(key string) (string, error) {
+	val, err := service.client.HGet(mappedKey, key).Result()
+	if err != nil {
+		return "", err
+	}
+
+	return val, nil
+}
