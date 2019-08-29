@@ -13,3 +13,11 @@ type URLRepositoryContract interface {
 	Update(data *model.URL) error
 	Delete(id uint) error
 }
+
+// UserRepositoryContract represent contract
+// of UserRepository.
+type UserRepositoryContract interface {
+	Find(id uint) model.User
+	FindByKey(key string) model.User
+	Create(data *model.User) error
+}
