@@ -19,5 +19,6 @@ type URLRepositoryContract interface {
 type UserRepositoryContract interface {
 	Find(id uint) model.User
 	FindByKey(key string) model.User
+	FindByEmail(email string) model.User
 	Create(data *model.User) error
 }

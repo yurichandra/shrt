@@ -50,6 +50,28 @@ func TestFindByKeyUserRepository(t *testing.T) {
 	}
 }
 
+func TestFindByEmailUserRepository(t *testing.T) {
+	db.Reset()
+
+	expected := model.User{
+		Email:    _testFaker.Lorem().Word(),
+		Password: _testFaker.Lorem().Word(),
+		Key:      _testFaker.Lorem().Word(),
+	}
+
+	userRepo := UserRepository{
+		db: _testDB,
+	}
+
+	userRepo.Create(&expected)
+
+	actual := userRepo.FindByEmail(expected.Email)
+
+	if actual.Email != expected.Email {
+		t.Errorf("Expected and actual data is not equal")
+	}
+}
+
 func TestCreateUserRepository(t *testing.T) {
 	db.Reset()
 

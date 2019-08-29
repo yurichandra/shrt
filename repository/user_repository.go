@@ -26,6 +26,14 @@ func (repo *UserRepository) FindByKey(key string) model.User {
 	return user
 }
 
+// FindByEmail return a user find by email.
+func (repo *UserRepository) FindByEmail(email string) model.User {
+	user := model.User{}
+	repo.db.Where("email = ?", email).First(&user)
+
+	return user
+}
+
 // Create creates a new user and return error if occured.
 func (repo *UserRepository) Create(data *model.User) error {
 	return repo.db.Create(data).Error
