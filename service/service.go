@@ -19,3 +19,10 @@ func InitURLService(repo repository.URLRepositoryContract, redis RedisServiceCon
 		cache: redis,
 	}
 }
+
+// InitAuthService initialize auth service.
+func InitAuthService(repo repository.UserRepositoryContract) *AuthService {
+	return &AuthService{
+		repo: repo,
+	}
+}

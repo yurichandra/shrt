@@ -8,3 +8,10 @@ func NewURLHandler(srv service.URLServiceContract) *URLHandler {
 		url: srv,
 	}
 }
+
+// NewAuthHandler return new handler of auth.
+func NewAuthHandler(srv service.AuthServiceContract) *AuthHandler {
+	return &AuthHandler{
+		auth: srv,
+	}
+}

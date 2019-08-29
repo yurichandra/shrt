@@ -8,3 +8,10 @@ func NewURLRepository(db *gorm.DB) *URLRepository {
 		db: db,
 	}
 }
+
+// NewUserRepository return UserRepository.
+func NewUserRepository(db *gorm.DB) *UserRepository {
+	return &UserRepository{
+		db: db,
+	}
+}

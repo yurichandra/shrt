@@ -48,3 +48,14 @@ func sendUnprocessableEntityResponse(message string) *errorResponse {
 		Message:    message,
 	}
 }
+
+func sendUnauthorizedResponse(message string) *errorResponse {
+	if message == "" {
+		message = "Unauthenticated"
+	}
+
+	return &errorResponse{
+		HTTPStatus: http.StatusUnauthorized,
+		Message:    message,
+	}
+}

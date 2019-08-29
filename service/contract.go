@@ -23,6 +23,6 @@ type URLServiceContract interface {
 // AuthServiceContract represent contract of
 // AuthService.
 type AuthServiceContract interface {
-	Authenticate(email string, password string) (model.URL, error)
-	Authorize(email string, password string) (model.URL, error)
+	Authenticate(email string, password string) (model.User, error)
+	Authorize(email string, password string) (model.User, error)
 }

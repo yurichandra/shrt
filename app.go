@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"github.com/yurichandra/shrt/db"
+	"github.com/yurichandra/shrt/handler"
 	"github.com/yurichandra/shrt/service"
 )
 
@@ -26,6 +27,8 @@ func initRoutes() chi.Router {
 		res, _ := json.Marshal(payload)
 		w.Write(res)
 	})
+
+	routes.Mount("/auth", handler.NewAuthHandler(authService).GetRoutes())
 
 	return routes
 }
