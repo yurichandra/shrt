@@ -7,7 +7,7 @@ import (
 // User represent model of user.
 type User struct {
 	ID        uint
-	Email     string
+	Email     string `gorm:"unique"`
 	Password  string
 	Key       string
 	CreatedAt time.Time
