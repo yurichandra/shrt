@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"time"
 
 	"github.com/yurichandra/shrt/model"
@@ -44,6 +45,9 @@ func (s *ShortenerService) Shorten(data map[string]string, auth bool) (model.URL
 
 	apiKey := data["apiKey"]
 	user := s.userRepo.FindByKey(apiKey)
+	if user.ID == 0 {
+		return model.URL{}, errors.New("Your api_key was invalid")
+	}
 
 	url := model.URL{
 		OriginalURL: originalURL,
