@@ -15,9 +15,9 @@ func InitRedisService(client *redis.Client) *RedisService {
 // InitShortenerService initialize url service.
 func InitShortenerService(repo repository.URLRepositoryContract, userRepo repository.UserRepositoryContract, redis RedisServiceContract) *ShortenerService {
 	return &ShortenerService{
-		repo:     repo,
-		userRepo: userRepo,
-		cache:    redis,
+		redisService: redis,
+		urlRepo:      repo,
+		userRepo:     userRepo,
 	}
 }
 

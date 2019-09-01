@@ -13,14 +13,14 @@ var url model.URL
 
 // ShortenerService represent service layer of URL model.
 type ShortenerService struct {
-	repo     repository.URLRepositoryContract
-	cache    RedisServiceContract
-	userRepo repository.UserRepositoryContract
+	redisService RedisServiceContract
+	urlRepo      repository.URLRepositoryContract
+	userRepo     repository.UserRepositoryContract
 }
 
 // Find finds an url by key.
 func (s *ShortenerService) Find(key string) (model.URL, error) {
-	mappedURL, err := s.cache.Find(key)
+	mappedURL, err := s.redisService.Find(key)
 	if err != nil {
 		return model.URL{}, errors.New("Shortened URL is not found")
 	}
@@ -38,7 +38,7 @@ func (s *ShortenerService) Find(key string) (model.URL, error) {
 func (s *ShortenerService) Shorten(data map[string]string, auth bool) (model.URL, error) {
 	originalURL := data["originalURL"]
 	now := time.Now()
-	key, err := s.cache.Generate()
+	key, err := s.redisService.Generate()
 	if err != nil {
 		return model.URL{}, err
 	}
@@ -51,8 +51,8 @@ func (s *ShortenerService) Shorten(data map[string]string, auth bool) (model.URL
 			UserID:      0,
 		}
 
-		s.cache.Map(key, &url)
-		s.repo.Create(&url)
+		s.redisService.Map(key, &url)
+		s.urlRepo.Create(&url)
 
 		return url, nil
 	}
@@ -69,7 +69,7 @@ func (s *ShortenerService) ShortenWithAuth(originalURL string, key string, apiKe
 		return model.URL{}, errors.New("Your api_key is invalid")
 	}
 
-	url := s.repo.FindBy(originalURL, user.ID)
+	url := s.urlRepo.FindBy(originalURL, user.ID)
 	if url.ID != 0 {
 		return url, nil
 	}
@@ -81,8 +81,8 @@ func (s *ShortenerService) ShortenWithAuth(originalURL string, key string, apiKe
 		UserID:      user.ID,
 	}
 
-	s.cache.Map(key, &url)
-	s.repo.Create(&url)
+	s.redisService.Map(key, &url)
+	s.urlRepo.Create(&url)
 
 	return url, nil
 }
