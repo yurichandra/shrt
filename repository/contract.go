@@ -9,6 +9,7 @@ import (
 type URLRepositoryContract interface {
 	Get() []model.URL
 	Find(id uint) model.URL
+	FindBy(originalURL string, userID uint) model.URL
 	Create(data *model.URL) error
 	Update(data *model.URL) error
 	Delete(id uint) error

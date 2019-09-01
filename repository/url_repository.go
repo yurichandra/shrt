@@ -26,6 +26,14 @@ func (r *URLRepository) Find(id uint) model.URL {
 	return url
 }
 
+// FindBy a url by original URL.
+func (r *URLRepository) FindBy(originalURL string, userID uint) model.URL {
+	url := model.URL{}
+	r.db.Where("original_url = ? AND user_id = ?", originalURL, userID).First(&url)
+
+	return url
+}
+
 // Create create new data and will return error if occured.
 func (r *URLRepository) Create(data *model.URL) error {
 	return r.db.Create(&data).Error
