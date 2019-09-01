@@ -59,11 +59,11 @@ func (s *ShortenerService) Shorten(data map[string]string, auth bool) (model.URL
 
 	apiKey := data["apiKey"]
 
-	return s.ShortenWithAuth(originalURL, apiKey)
+	return s.ShortenWithAuth(originalURL, key, apiKey)
 }
 
 // ShortenWithAuth doing shorten while authentication is true.
-func (s *ShortenerService) ShortenWithAuth(originalURL string, apiKey string) (model.URL, error) {
+func (s *ShortenerService) ShortenWithAuth(originalURL string, key string, apiKey string) (model.URL, error) {
 	user := s.userRepo.FindByKey(apiKey)
 	if user.ID == 0 {
 		return model.URL{}, errors.New("Your api_key is invalid")
@@ -74,7 +74,6 @@ func (s *ShortenerService) ShortenWithAuth(originalURL string, apiKey string) (m
 		return url, nil
 	}
 
-	key, _ := s.cache.Generate()
 	url = model.URL{
 		OriginalURL: originalURL,
 		Keys:        key,

@@ -18,7 +18,7 @@ type RedisServiceContract interface {
 type ShortenerServiceContract interface {
 	Find(key string) (model.URL, error)
 	Shorten(data map[string]string, auth bool) (model.URL, error)
-	ShortenWithAuth(originalURL string, apiKey string) (model.URL, error)
+	ShortenWithAuth(originalURL string, key string, apiKey string) (model.URL, error)
 }
 
 // AuthServiceContract represent contract of
