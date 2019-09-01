@@ -10,10 +10,6 @@ import (
 	"github.com/yurichandra/shrt/service"
 )
 
-var (
-	auth = false
-)
-
 // ShortenerHandler represent handler of shortener.
 type ShortenerHandler struct {
 	url service.ShortenerServiceContract
@@ -30,7 +26,8 @@ func (h *ShortenerHandler) GetRoutes() chi.Router {
 
 // Store saves and return new or existing URL.
 func (h *ShortenerHandler) Store(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]string)
+	data := map[string]string{}
+	var auth bool
 
 	request := object.URLRequest{}
 	if err := render.Bind(r, &request); err != nil {
