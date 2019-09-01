@@ -9,13 +9,12 @@ import (
 	"github.com/yurichandra/shrt/repository"
 )
 
-var url model.URL
-
 // ShortenerService represent service layer of URL model.
 type ShortenerService struct {
 	redisService RedisServiceContract
 	urlRepo      repository.URLRepositoryContract
 	userRepo     repository.UserRepositoryContract
+	url          model.URL
 }
 
 // Find finds an url by key.
@@ -26,12 +25,12 @@ func (s *ShortenerService) Find(key string) (model.URL, error) {
 	}
 
 	urlData := []byte(mappedURL)
-	err = json.Unmarshal(urlData, &url)
+	err = json.Unmarshal(urlData, &s.url)
 	if err != nil {
 		return model.URL{}, err
 	}
 
-	return url, nil
+	return s.url, nil
 }
 
 // Shorten shortens original URL.
