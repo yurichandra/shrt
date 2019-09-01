@@ -1,6 +1,8 @@
 package service
 
 import (
+	"time"
+
 	"github.com/yurichandra/shrt/model"
 )
 
@@ -17,8 +19,8 @@ type RedisServiceContract interface {
 // Shorten service.
 type ShortenerServiceContract interface {
 	Find(key string) (model.URL, error)
-	Shorten(data map[string]string, auth bool) (model.URL, error)
-	ShortenWithAuth(originalURL string, key string, apiKey string) (model.URL, error)
+	Shorten(originalURL string, apiKey string, now time.Time, auth bool) (model.URL, error)
+	ShortenWithAuth(originalURL string, key string, now time.Time, apiKey string) (model.URL, error)
 }
 
 // AuthServiceContract represent contract of

@@ -1,22 +1,39 @@
 package mock
 
-import "github.com/stretchr/testify/mock"
+import (
+	"github.com/stretchr/testify/mock"
+	"github.com/yurichandra/shrt/model"
+)
 
 // RedisServiceMock represent mocking of RedisService.
 type RedisServiceMock struct {
 	mock.Mock
 }
 
-// HGet is mocking representation of HGet() on CacheService.
-func (m *RedisServiceMock) HGet(hash string, field string) (string, error) {
-	args := m.Called(hash, field)
+// Init mocks init.
+func (m *RedisServiceMock) Init() error {
+	args := m.Called()
+
+	return args.Error(0)
+}
+
+// Generate mocks generate.
+func (m *RedisServiceMock) Generate() (string, error) {
+	args := m.Called()
 
 	return args.String(0), args.Error(1)
 }
 
-// HSet is mocking representation of HSet() on CacheService.
-func (m *RedisServiceMock) HSet(hash string, field string, value string) error {
-	args := m.Called(hash, field, value)
+// Map mocks map.
+func (m *RedisServiceMock) Map(key string, url *model.URL) error {
+	args := m.Called(key, url)
 
 	return args.Error(0)
+}
+
+// Find mocks find.
+func (m *RedisServiceMock) Find(key string) (string, error) {
+	args := m.Called(key)
+
+	return args.String(0), args.Error(1)
 }

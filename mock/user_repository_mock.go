@@ -25,7 +25,7 @@ func (m *UserRepositoryMock) FindByKey(key string) model.User {
 }
 
 // FindByEmail mocks FindByEmail.
-func (m *UserRepositoryMock) FindByEmail(email uint) model.User {
+func (m *UserRepositoryMock) FindByEmail(email string) model.User {
 	args := m.Called(email)
 
 	return args.Get(0).(model.User)

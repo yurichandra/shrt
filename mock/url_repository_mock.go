@@ -24,6 +24,13 @@ func (m *URLRepositoryMock) Find(id uint) model.URL {
 	return args.Get(0).(model.URL)
 }
 
+// FindBy is mocking representation of FindBy() on URLRepository.
+func (m *URLRepositoryMock) FindBy(originalURL string, userID uint) model.URL {
+	args := m.Called(originalURL, userID)
+
+	return args.Get(0).(model.URL)
+}
+
 // Create is mocking representation of Create() on URLRepository.
 func (m *URLRepositoryMock) Create(data *model.URL) error {
 	args := m.Called(data)

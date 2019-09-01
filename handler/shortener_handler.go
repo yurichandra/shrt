@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/yurichandra/shrt/object"
 
@@ -27,7 +28,6 @@ func (h *ShortenerHandler) GetRoutes() chi.Router {
 
 // Store saves and return new or existing URL.
 func (h *ShortenerHandler) Store(w http.ResponseWriter, r *http.Request) {
-	data := map[string]string{}
 	var auth bool
 
 	request := object.URLRequest{}
@@ -42,10 +42,7 @@ func (h *ShortenerHandler) Store(w http.ResponseWriter, r *http.Request) {
 		auth = true
 	}
 
-	data["originalURL"] = request.OriginalURL
-	data["apiKey"] = apiKey
-
-	url, err := h.url.Shorten(data, auth)
+	url, err := h.url.Shorten(request.OriginalURL, apiKey, time.Now(), auth)
 	if err != nil {
 		render.Render(w, r, sendInternalServerErrorResponse(err.Error()))
 		return
