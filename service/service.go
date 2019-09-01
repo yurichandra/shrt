@@ -5,15 +5,15 @@ import (
 	"github.com/yurichandra/shrt/repository"
 )
 
-// InitRedisService initialize redis service.
-func InitRedisService(client *redis.Client) *RedisService {
+// NewRedisService returns redis service instance.
+func NewRedisService(client *redis.Client) *RedisService {
 	return &RedisService{
 		client: client,
 	}
 }
 
-// InitShortenerService initialize url service.
-func InitShortenerService(repo repository.URLRepositoryContract, userRepo repository.UserRepositoryContract, redis RedisServiceContract) *ShortenerService {
+// NewShortenerService returns url service instance.
+func NewShortenerService(repo repository.URLRepositoryContract, userRepo repository.UserRepositoryContract, redis RedisServiceContract) *ShortenerService {
 	return &ShortenerService{
 		redisService: redis,
 		urlRepo:      repo,
@@ -21,8 +21,8 @@ func InitShortenerService(repo repository.URLRepositoryContract, userRepo reposi
 	}
 }
 
-// InitAuthService initialize auth service.
-func InitAuthService(repo repository.UserRepositoryContract) *AuthService {
+// NewAuthService returns auth service instance.
+func NewAuthService(repo repository.UserRepositoryContract) *AuthService {
 	return &AuthService{
 		repo: repo,
 	}

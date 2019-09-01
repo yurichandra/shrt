@@ -27,9 +27,9 @@ func boot() {
 	userRepo := repository.NewUserRepository(dbConn)
 	urlRepo := repository.NewURLRepository(dbConn)
 
-	redisService = service.InitRedisService(redisClient)
-	authService = service.InitAuthService(userRepo)
-	shortenerService = service.InitShortenerService(urlRepo, userRepo, redisService)
+	redisService = service.NewRedisService(redisClient)
+	authService = service.NewAuthService(userRepo)
+	shortenerService = service.NewShortenerService(urlRepo, userRepo, redisService)
 
 	if err != nil {
 		log.Fatal(err)
