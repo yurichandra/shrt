@@ -7,13 +7,14 @@ import (
 	"github.com/yurichandra/shrt/model"
 )
 
-func TestGet(t *testing.T) {
+func TestGetURLRepository(t *testing.T) {
 	db.Reset()
 
 	for i := 0; i < 5; i++ {
 		db.Get().Create(&model.URL{
 			OriginalURL: _testFaker.Lorem().Word(),
 			Keys:        _testFaker.Lorem().Word(),
+			UserID:      uint(1),
 		})
 	}
 
@@ -28,12 +29,13 @@ func TestGet(t *testing.T) {
 	}
 }
 
-func TestFind(t *testing.T) {
+func TestFindURLRepository(t *testing.T) {
 	db.Reset()
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
 		Keys:        _testFaker.Lorem().Word(),
+		UserID:      uint(1),
 	}
 
 	testURLRepo := &URLRepository{
@@ -52,12 +54,42 @@ func TestFind(t *testing.T) {
 	}
 }
 
-func TestCreate(t *testing.T) {
+func TestFindByURLRepository(t *testing.T) {
 	db.Reset()
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
 		Keys:        _testFaker.Lorem().Word(),
+		UserID:      uint(1),
+	}
+
+	testURLRepo := &URLRepository{
+		db: _testDB,
+	}
+
+	testURLRepo.Create(mockedURL)
+
+	expected := testURLRepo.FindBy(mockedURL.OriginalURL, mockedURL.UserID)
+	if expected.OriginalURL != mockedURL.OriginalURL {
+		t.Errorf("Expected and actual data not matched")
+	}
+
+	if expected.UserID != mockedURL.UserID {
+		t.Errorf("Expected and actual data not matched")
+	}
+
+	if expected.Keys != mockedURL.Keys {
+		t.Errorf("Expected and actual data not matched")
+	}
+}
+
+func TestCreateURLRepository(t *testing.T) {
+	db.Reset()
+
+	mockedURL := &model.URL{
+		OriginalURL: _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
+		UserID:      uint(1),
 	}
 
 	testURLRepo := &URLRepository{
@@ -70,12 +102,13 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-func TestUpdate(t *testing.T) {
+func TestUpdateURLRepository(t *testing.T) {
 	db.Reset()
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
 		Keys:        _testFaker.Lorem().Word(),
+		UserID:      uint(1),
 	}
 
 	testURLRepo := &URLRepository{
@@ -95,12 +128,13 @@ func TestUpdate(t *testing.T) {
 	}
 }
 
-func TestDelete(t *testing.T) {
+func TestDeleteURLRepository(t *testing.T) {
 	db.Reset()
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
 		Keys:        _testFaker.Lorem().Word(),
+		UserID:      uint(1),
 	}
 
 	testURLRepo := &URLRepository{
