@@ -51,7 +51,7 @@ func TestMapRedisService(t *testing.T) {
 
 	mockURL := model.URL{
 		OriginalURL: _mockFaker.Lorem().Word(),
-		ShortURL:    val,
+		Keys:        val,
 	}
 
 	err = redisService.Map(val, &mockURL)

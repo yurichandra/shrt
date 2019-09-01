@@ -13,7 +13,7 @@ type URLRequest struct {
 // URLResponse represent object response of URL model.
 type URLResponse struct {
 	OriginalURL string `json:"original_url"`
-	ShortURL    string `json:"short_url"`
+	Keys        string `json:"keys"`
 }
 
 // Bind doing validation for request object.

@@ -18,9 +18,9 @@ type ShortenerService struct {
 	userRepo repository.UserRepositoryContract
 }
 
-// Find finds an url by shorturl.
-func (s *ShortenerService) Find(shortURL string) (model.URL, error) {
-	mappedURL, err := s.cache.Find(shortURL)
+// Find finds an url by key.
+func (s *ShortenerService) Find(key string) (model.URL, error) {
+	mappedURL, err := s.cache.Find(key)
 	if err != nil {
 		return model.URL{}, errors.New("Shortened URL is not found")
 	}
@@ -46,7 +46,7 @@ func (s *ShortenerService) Shorten(data map[string]string, auth bool) (model.URL
 	if !auth {
 		url := model.URL{
 			OriginalURL: originalURL,
-			ShortURL:    key,
+			Keys:        key,
 			ExpiredDate: now.Add(7 * 24),
 			UserID:      0,
 		}
@@ -77,7 +77,7 @@ func (s *ShortenerService) ShortenWithAuth(originalURL string, apiKey string) (m
 	key, _ := s.cache.Generate()
 	url = model.URL{
 		OriginalURL: originalURL,
-		ShortURL:    key,
+		Keys:        key,
 		ExpiredDate: time.Now().Add(7 * 24),
 		UserID:      user.ID,
 	}

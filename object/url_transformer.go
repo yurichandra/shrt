@@ -1,9 +1,6 @@
 package object
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/go-chi/render"
 	"github.com/yurichandra/shrt/model"
 )
@@ -12,7 +9,7 @@ import (
 func CreateURLResponse(url model.URL) render.Renderer {
 	return &URLResponse{
 		OriginalURL: url.OriginalURL,
-		ShortURL:    fmt.Sprintf("%s/%s", os.Getenv("BASE_URL"), url.ShortURL),
+		Keys:        url.Keys,
 	}
 }
 

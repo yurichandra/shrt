@@ -13,7 +13,7 @@ func TestGet(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		db.Get().Create(&model.URL{
 			OriginalURL: _testFaker.Lorem().Word(),
-			ShortURL:    _testFaker.Lorem().Word(),
+			Keys:        _testFaker.Lorem().Word(),
 		})
 	}
 
@@ -33,7 +33,7 @@ func TestFind(t *testing.T) {
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
-		ShortURL:    _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
 	}
 
 	testURLRepo := &URLRepository{
@@ -47,7 +47,7 @@ func TestFind(t *testing.T) {
 		t.Errorf("Expected and actual data not matched")
 	}
 
-	if expected.ShortURL != mockedURL.ShortURL {
+	if expected.Keys != mockedURL.Keys {
 		t.Errorf("Expected and actual data not matched")
 	}
 }
@@ -57,7 +57,7 @@ func TestCreate(t *testing.T) {
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
-		ShortURL:    _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
 	}
 
 	testURLRepo := &URLRepository{
@@ -75,7 +75,7 @@ func TestUpdate(t *testing.T) {
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
-		ShortURL:    _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
 	}
 
 	testURLRepo := &URLRepository{
@@ -86,7 +86,7 @@ func TestUpdate(t *testing.T) {
 
 	updatedMockURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
-		ShortURL:    _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
 	}
 
 	expected := testURLRepo.Update(updatedMockURL)
@@ -100,7 +100,7 @@ func TestDelete(t *testing.T) {
 
 	mockedURL := &model.URL{
 		OriginalURL: _testFaker.Lorem().Word(),
-		ShortURL:    _testFaker.Lorem().Word(),
+		Keys:        _testFaker.Lorem().Word(),
 	}
 
 	testURLRepo := &URLRepository{

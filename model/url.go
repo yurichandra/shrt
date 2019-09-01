@@ -7,7 +7,7 @@ type URL struct {
 	ID          uint
 	UserID      uint
 	OriginalURL string
-	ShortURL    string
+	Keys        string
 	ExpiredDate time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
