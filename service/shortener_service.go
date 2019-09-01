@@ -1,12 +1,15 @@
 package service
 
 import (
+	"encoding/json"
 	"errors"
 	"time"
 
 	"github.com/yurichandra/shrt/model"
 	"github.com/yurichandra/shrt/repository"
 )
+
+var url model.URL
 
 // ShortenerService represent service layer of URL model.
 type ShortenerService struct {
@@ -17,7 +20,18 @@ type ShortenerService struct {
 
 // Find finds an url by shorturl.
 func (s *ShortenerService) Find(shortURL string) (model.URL, error) {
-	return model.URL{}, nil
+	mappedURL, err := s.cache.Find(shortURL)
+	if err != nil {
+		return model.URL{}, errors.New("Shortened URL is not found")
+	}
+
+	urlData := []byte(mappedURL)
+	err = json.Unmarshal(urlData, &url)
+	if err != nil {
+		return model.URL{}, err
+	}
+
+	return url, nil
 }
 
 // Shorten shortens original URL.

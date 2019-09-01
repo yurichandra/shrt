@@ -20,6 +20,7 @@ func (h *ShortenerHandler) GetRoutes() chi.Router {
 	router := chi.NewRouter()
 
 	router.Post("/", h.Store)
+	router.Get("/{shortURL}", h.Find)
 
 	return router
 }
@@ -54,6 +55,22 @@ func (h *ShortenerHandler) Store(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		render.Render(w, r, sendInternalServerErrorResponse(err.Error()))
 
+		return
+	}
+}
+
+// Find finds url by short url.
+func (h *ShortenerHandler) Find(w http.ResponseWriter, r *http.Request) {
+	shortURLParam := chi.URLParam(r, "shortURL")
+	url, err := h.url.Find(shortURLParam)
+	if err != nil {
+		render.Render(w, r, sendNotFoundResponse(err.Error()))
+		return
+	}
+
+	err = render.Render(w, r, object.CreateURLResponse(url))
+	if err != nil {
+		render.Render(w, r, sendInternalServerErrorResponse(err.Error()))
 		return
 	}
 }
