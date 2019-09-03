@@ -2,10 +2,10 @@ version: "3.7"
 
 services:
   shrt:
-    image: yurichandra/shrt
+    image: yurichandra/shrt-api
     container_name: shrt
     ports:
-      - 8000:8000
+      - 8001:8000
     env_file:
       - .env
     networks:
